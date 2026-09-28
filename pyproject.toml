@@ -1,0 +1,82 @@
+[build-system]
+requires = ["hatchling>=1.18"]
+build-backend = "hatchling.build"
+
+[project]
+name = "bitvavo-sdk"
+description = "Typed Python SDK (sync + async) for the Bitvavo Exchange REST API"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.9"
+authors = [{ name = "Jay Maree" }]
+keywords = ["bitvavo", "crypto", "exchange", "trading", "api", "sdk", "rest"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Financial and Insurance Industry",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Office/Business :: Financial :: Investment",
+    "Typing :: Typed",
+]
+dependencies = [
+    "httpx>=0.25,<1",
+    "typing-extensions>=4.7; python_version < '3.11'",
+]
+dynamic = ["version"]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7",
+    "respx>=0.21",
+    "mypy>=1.8",
+    "ruff>=0.4",
+    "build",
+    "twine",
+]
+docs = [
+    "mkdocs>=1.6,<2",
+    "mkdocs-material>=9",
+    "mkdocstrings[python]>=0.24",
+]
+
+[project.urls]
+Homepage = "https://github.com/rebasedaily/coinbase-pro-py"
+Documentation = "https://rebasedaily.github.io/coinbase-pro-py"
+Source = "https://github.com/rebasedaily/coinbase-pro-py"
+Changelog = "https://github.com/rebasedaily/coinbase-pro-py/blob/main/CHANGELOG.md"
+"Bitvavo API docs" = "https://docs.bitvavo.com/docs/rest-api/introduction/"
+
+[tool.hatch.version]
+path = "src/bitvavo_sdk/_version.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/bitvavo_sdk"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/", "tests/", "README.md", "CHANGELOG.md", "LICENSE"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+extend-exclude = ["src/bitvavo_sdk/_async_endpoints.py"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "RUF"]
+ignore = ["UP006", "UP007", "UP035", "UP045"]
+
+[tool.mypy]
+python_version = "3.9"
+strict = true
+files = ["src/bitvavo_sdk"]
