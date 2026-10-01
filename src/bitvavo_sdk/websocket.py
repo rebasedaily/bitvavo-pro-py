@@ -158,8 +158,9 @@ class AsyncBitvavoWebSocket(AsyncEndpoints):
         ...         print(trade["price"], trade["amount"])
 
     Args:
-        api_key, api_secret: Needed for private actions and the ``account`` channel.
-            The connection authenticates on connect and after every reconnect.
+        api_key: Needed for private actions and the ``account`` channel. The
+            connection authenticates on connect and after every reconnect.
+        api_secret: Secret for ``api_key``.
         operator_id: Default ``operatorId`` for order actions.
         url: WebSocket endpoint.
         request_timeout: Seconds to wait for the response to an action. A timeout on
