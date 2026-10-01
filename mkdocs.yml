@@ -26,6 +26,7 @@ nav:
       - Error handling: errors.md
       - Rate limits: rate-limits.md
       - Async usage: async.md
+      - WebSocket API: websocket.md
   - Reference:
       - Endpoints: endpoints.md
       - API docs (generated): api.md

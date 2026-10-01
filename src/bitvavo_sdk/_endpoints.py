@@ -427,7 +427,8 @@ class SyncEndpoints(BaseClient):
         self, cod_group_id: int, expiry_after_seconds: int
     ) -> CancelOrdersAfter:
         """Arm a dead man's switch: cancel orders in ``cod_group_id`` unless this is
-        called again within ``expiry_after_seconds`` (10-300).
+        called again within ``expiry_after_seconds`` (10-300). Pass ``0`` to remove
+        the group (its orders stay open).
         ``POST /cancelOrdersAfter`` (weight 5).
         """
         body = {"codGroupId": cod_group_id, "expiryAfterSeconds": expiry_after_seconds}

@@ -1,6 +1,6 @@
 # bitvavo-sdk
 
-A Python SDK for the [Bitvavo](https://bitvavo.com) Exchange REST API, with typed sync and async clients.
+A Python SDK for the [Bitvavo](https://bitvavo.com) Exchange REST and WebSocket APIs, with typed sync and async clients.
 
 ```python
 from bitvavo_sdk import Bitvavo
@@ -13,6 +13,7 @@ client.get_balance("BTC")
 ```
 
 - **Complete REST coverage.** The SDK wraps all 31 REST endpoints (market data, trading, account, transfers, MiCA reports) as documented methods. `client.request()` covers anything newer.
+- **WebSocket streaming.** Tickers, trades, candles and your own order and fill events arrive as async iterators or callbacks. A self-healing local order book is included, and reconnects re-authenticate and resubscribe automatically. Every REST method also works over the socket.
 - **Sync and async.** `Bitvavo` and `AsyncBitvavo` expose identical methods. The async client is generated from the sync source, so the two can't drift apart.
 - **Typed.** Responses are described with `TypedDict`s, and the package ships `py.typed` and passes `mypy --strict`.
 - **Correct signing.** It implements Bitvavo's HMAC-SHA256 scheme and is verified against the test vector in Bitvavo's documentation. Clock drift (errorCode 304) is detected and fixed automatically.
@@ -21,7 +22,7 @@ client.get_balance("BTC")
 - **Useful errors.** `InsufficientBalanceError`, `MarketNotTradingError`, `RateLimitError` and others carry `error_code`, `status_code` and the raw response.
 - **Decimal-safe.** Numbers are sent as plain decimal strings (`1e-05` becomes `"0.00001"`). Helpers round prices to `tickSize` and amounts to `quantityDecimals`.
 
-Python 3.9+ · one runtime dependency ([httpx](https://www.python-httpx.org/)).
+Python 3.9+ · two runtime dependencies ([httpx](https://www.python-httpx.org/), [websockets](https://websockets.readthedocs.io/)).
 
 ## Install
 
@@ -81,6 +82,25 @@ async def main():
 asyncio.run(main())
 ```
 
+### WebSocket streaming
+
+```python
+import asyncio
+from bitvavo_sdk import AsyncBitvavoWebSocket
+
+
+async def main():
+    async with AsyncBitvavoWebSocket() as ws:
+        book = await ws.watch_order_book("BTC-EUR")  # kept in sync from deltas
+        async for trade in await ws.subscribe_trades("BTC-EUR"):
+            print(trade["price"], trade["amount"], "| best bid", book.best_bid)
+
+
+asyncio.run(main())
+```
+
+Prefer callbacks? `BitvavoWebSocket` runs the same client on a background thread.
+
 ## Documentation
 
 | Topic | |
@@ -92,6 +112,7 @@ asyncio.run(main())
 | [Rate limits](docs/rate-limits.md) | Weights, budget tracking, avoiding bans |
 | [Endpoint reference](docs/endpoints.md) | Every method with its REST route and weight |
 | [Async usage](docs/async.md) | `AsyncBitvavo` patterns |
+| [WebSocket API](docs/websocket.md) | Streams, local order book, reconnects, sync client |
 | [Development and publishing](docs/development.md) | Tests, code generation, releasing to PyPI |
 
 To build the docs site locally, run `pip install -e ".[docs]" && mkdocs serve`.

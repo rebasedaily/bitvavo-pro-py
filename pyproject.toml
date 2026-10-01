@@ -4,13 +4,13 @@ build-backend = "hatchling.build"
 
 [project]
 name = "bitvavo-sdk"
-description = "Typed Python SDK (sync + async) for the Bitvavo Exchange REST API"
+description = "Typed Python SDK (sync + async) for the Bitvavo Exchange REST and WebSocket APIs"
 readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]
 requires-python = ">=3.9"
 authors = [{ name = "Jay Maree" }]
-keywords = ["bitvavo", "crypto", "exchange", "trading", "api", "sdk", "rest"]
+keywords = ["bitvavo", "crypto", "exchange", "trading", "api", "sdk", "rest", "websocket"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
@@ -28,6 +28,7 @@ classifiers = [
 ]
 dependencies = [
     "httpx>=0.25,<1",
+    "websockets>=13,<16",
     "typing-extensions>=4.7; python_version < '3.11'",
 ]
 dynamic = ["version"]

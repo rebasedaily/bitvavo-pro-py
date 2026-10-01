@@ -10,7 +10,7 @@ pip install -e ".[dev,docs]"
 ## Checks
 
 ```bash
-pytest                                   # fully offline (respx mocks); live tests skip without keys
+pytest                                   # fully offline (respx mocks, local fake WebSocket server)
 ruff check . && ruff format --check .
 mypy                                     # strict
 python scripts/generate_async.py --check
@@ -27,6 +27,10 @@ src/bitvavo_sdk/
   _async_endpoints.py   GENERATED async twin                         <- never edit
   client.py             Bitvavo: sync transport, retry loop
   async_client.py       AsyncBitvavo: async transport, retry loop
+  websocket.py          AsyncBitvavoWebSocket: connection, auth, subscriptions, reconnect
+  websocket_sync.py     BitvavoWebSocket: background-thread wrapper with callbacks
+  _ws_routes.py         REST (method, path) -> WebSocket action mapping
+  orderbook.py          LocalOrderBook: snapshot + nonce-ordered deltas
   auth.py               HMAC signing
   errors.py             exception hierarchy + errorCode mapping
   rate_limit.py         RateLimitState

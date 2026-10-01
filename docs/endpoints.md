@@ -1,6 +1,6 @@
 # Endpoint reference
 
-Every Bitvavo REST endpoint and the SDK method that calls it. The weight is what the call costs against the 1000 points per minute (see [Rate limits](rate-limits.md)). 🔒 = requires an API key. All arguments after the first positional ones are keyword-only and use `snake_case`. The SDK converts them to Bitvavo's `camelCase`.
+Every Bitvavo REST endpoint and the SDK method that calls it. The same methods are available on the [WebSocket clients](websocket.md), except the staking balance and MiCA report endpoints. The weight is what the call costs against the 1000 points per minute (see [Rate limits](rate-limits.md)). 🔒 = requires an API key. All arguments after the first positional ones are keyword-only and use `snake_case`. The SDK converts them to Bitvavo's `camelCase`.
 
 ## General
 

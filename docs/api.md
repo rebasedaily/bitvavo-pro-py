@@ -12,6 +12,22 @@ This page is generated from the docstrings in the source code.
     options:
       members: ["request", "close"]
 
+::: bitvavo_sdk.AsyncBitvavoWebSocket
+    options:
+      members_order: source
+      filters: ["!^_"]
+      inherited_members: false
+
+::: bitvavo_sdk.BitvavoWebSocket
+    options:
+      members_order: source
+      filters: ["!^_"]
+      inherited_members: false
+
+::: bitvavo_sdk.Subscription
+
+::: bitvavo_sdk.LocalOrderBook
+
 ::: bitvavo_sdk.errors
 
 ::: bitvavo_sdk.rate_limit.RateLimitState

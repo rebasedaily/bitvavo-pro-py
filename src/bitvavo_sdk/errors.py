@@ -150,3 +150,35 @@ def error_from_response(response: httpx.Response, reset_at: Optional[int] = None
     if issubclass(cls, RateLimitError):
         return cls(message, reset_at=reset_at, **kwargs)
     return cls(message, **kwargs)
+
+
+# The WebSocket API reports only an errorCode; derive the HTTP-equivalent status from
+# Bitvavo's error table so both transports raise the same exception classes.
+_SERVER_CODES = {101, 107, 108, 109, 111, 400, 419, 430}
+_NOT_FOUND_CODES = {240, 415, 510}
+_FORBIDDEN_CODES = set(range(300, 323)) | set(range(511, 515))
+
+
+def status_for_error_code(error_code: Optional[int]) -> int:
+    """HTTP status Bitvavo's REST API would use for ``error_code``."""
+    if error_code in (105, 112):
+        return 429
+    if error_code in _SERVER_CODES:
+        return 503 if error_code != 400 else 500
+    if error_code in _NOT_FOUND_CODES:
+        return 404
+    if error_code in _FORBIDDEN_CODES:
+        return 403
+    if error_code == 431:
+        return 409
+    return 400
+
+
+def error_from_payload(payload: Dict[str, Any]) -> APIError:
+    """Build the exception for a WebSocket error message."""
+    raw_code = payload.get("errorCode")
+    error_code = raw_code if isinstance(raw_code, int) else None
+    status = status_for_error_code(error_code)
+    cls = error_class_for(status, error_code)
+    message = str(payload.get("error", "Unknown error"))
+    return cls(message, status_code=status, error_code=error_code, body=payload)
