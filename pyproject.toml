@@ -49,10 +49,10 @@ docs = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/rebasedaily/coinbase-pro-py"
-Documentation = "https://rebasedaily.github.io/coinbase-pro-py"
-Source = "https://github.com/rebasedaily/coinbase-pro-py"
-Changelog = "https://github.com/rebasedaily/coinbase-pro-py/blob/main/CHANGELOG.md"
+Homepage = "https://github.com/rebasedaily/bitvavo-pro-py"
+Documentation = "https://rebasedaily.github.io/bitvavo-pro-py"
+Source = "https://github.com/rebasedaily/bitvavo-pro-py"
+Changelog = "https://github.com/rebasedaily/bitvavo-pro-py/blob/main/CHANGELOG.md"
 "Bitvavo API docs" = "https://docs.bitvavo.com/docs/rest-api/introduction/"
 
 [tool.hatch.version]

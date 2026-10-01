@@ -1,6 +1,6 @@
 site_name: bitvavo-sdk
 site_description: Typed Python SDK (sync + async) for the Bitvavo Exchange REST API
-repo_url: https://github.com/rebasedaily/coinbase-pro-py
+repo_url: https://github.com/rebasedaily/bitvavo-pro-py
 edit_uri: edit/main/docs/
 
 theme:
